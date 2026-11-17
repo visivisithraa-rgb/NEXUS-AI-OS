@@ -1,0 +1,7 @@
+Flask
+Flask-Cors
+google-generativeai
+python-dotenv
+Flask-Limiter
+pypdf
+python-docx

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NEXUS AI OS</title>
+
+    <!-- CSS Connection -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Desktop Container -->
+    <div class="desktop">
+
+        <!-- Top Header -->
+        <header>
+            <div style="display:flex; align-items:center; gap:12px;">
+                <h2>✦ NEXUS AI OS</h2>
+                <span id="userProfileBadge" style="background:rgba(255,255,255,0.08); padding:4px 10px; border-radius:12px; font-size:12px; color:#d8b4fe; font-weight:bold;">👤 Commander</span>
+                <span id="aiConfigStatusBadge" class="ai-config-badge not-configured" title="AI API Status">Not Configured</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:16px;">
+                <div id="clock">Loading...</div>
+                <button id="notifBellBtn" onclick="openApp('Notification Center')" title="Notification Center" style="background:none; border:none; color:white; font-size:16px; cursor:pointer; position:relative;">
+                    🔔<span id="notifBadge" style="position:absolute; top:-2px; right:-4px; background:#ff5c7c; border-radius:50%; width:8px; height:8px; display:none;"></span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="workspace">
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+
+                <button onclick="toggleAppLauncher()" style="background:linear-gradient(135deg, #7555a5, #9b5de5); font-weight:bold; margin-bottom:18px; border:none; box-shadow:0 4px 12px rgba(155,93,229,0.3);">
+                    🚀 App Launcher
+                </button>
+
+                <h3>NEXUS MENU</h3>
+
+                <button onclick="openApp('AI Assistant')">
+                    🤖 AI Assistant
+                </button>
+
+                <button onclick="openApp('AI Agent Dashboard')" style="border-left: 3px solid #b794f4;">
+                    ⚡ AI Agent
+                </button>
+
+                <button onclick="openApp('File Manager')">
+                    📁 Files
+                </button>
+
+                <button onclick="openApp('Notes')">
+                    📝 Notes
+                </button>
+
+                <button onclick="openApp('Task Manager')">
+                    📋
+                    <br/>Task Manager
+                </button>
+                <button onclick="openApp('Calendar')">
+                    📅
+                    <br/>Calendar
+                </button>
+                <button onclick="openApp('Calculator')">
+                    🧮
+                    <br/>Calculator
+                </button>
+                <button onclick="openApp('System Monitor')">
+                    📊
+                    <br/>System Monitor
+                </button>
+                <button onclick="openApp('Settings')">
+                    ⚙️
+                    <br/>Settings
+                </button>
+
+
+            </aside>
+
+            <!-- Desktop Area -->
+            <section class="desktop-area">
+
+                <h1>Welcome to NEXUS AI OS</h1>
+
+                <p>Your computer. Your intelligence.</p>
+
+                <!-- Application Icons -->
+                <div class="apps">
+
+                    <button onclick="openApp('AI Assistant')">
+                        🤖
+                        <br>
+                        AI Assistant
+                    </button>
+
+                    <button onclick="openApp('AI Agent Dashboard')">
+                        ⚡
+                        <br>
+                        AI Agent
+                    </button>
+
+                    <button onclick="openApp('File Manager')">
+                        📁
+                        <br>
+                        Files
+                    </button>
+
+                    <button onclick="openApp('Notes')">
+                        📝
+                        <br>
+                        Notes
+                    </button>
+
+                    <button onclick="openApp('Task Manager')">
+                        📋
+                        <br>
+                        Tasks
+                    </button>
+
+                    <button onclick="openApp('Calendar')">
+                        📅
+                        <br>
+                        Calendar
+                    </button>
+
+                    <button onclick="openApp('Calculator')">
+                        🧮
+                        <br>
+                        Calculator
+                    </button>
+
+                    <button onclick="openApp('System Monitor')">
+                        📊
+                        <br>
+                        Monitor
+                    </button>
+
+                    <button onclick="openApp('Settings')">
+                        ⚙️
+                        <br>
+                        Settings
+                    </button>
+
+                </div>
+
+                <!-- App Launcher Spotlight Overlay -->
+                <div id="appLauncherModal" class="app-launcher-overlay" hidden>
+                    <div class="app-launcher-card">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span style="font-size:18px;">🚀</span>
+                                <strong style="color:#d8b4fe; font-size:16px;">NEXUS App Launcher</strong>
+                            </div>
+                            <button onclick="toggleAppLauncher()" style="background:none; border:none; color:#a99ec2; font-size:16px; cursor:pointer;">✕</button>
+                        </div>
+                        <input type="text" id="launcherSearchInput" class="nexus-input" placeholder="Search applications (e.g. Notes, Tasks, Files)..." style="width:100%; padding:10px 14px; margin-bottom:14px; font-size:14px;">
+                        <div id="launcherAppsGrid" class="launcher-grid"></div>
+                        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; font-size:11px; color:#a99ec2;">
+                            <span>Shortcuts: <kbd style="background:#191228; padding:2px 6px; border-radius:4px; border:1px solid #554477;">Ctrl+Space</kbd></span>
+                            <span>Press <kbd style="background:#191228; padding:2px 6px; border-radius:4px; border:1px solid #554477;">Esc</kbd> to close</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Application Window -->
+                <div id="appWindow" class="app-window" hidden>
+
+                    <!-- Window Header -->
+                    <div class="window-header" id="windowHeader">
+
+                        <span id="windowTitle">
+                            Application
+                        </span>
+
+                        <div class="window-actions" style="display:flex; gap:6px; align-items:center;">
+                            <button onclick="minimizeApp()" title="Minimize" style="background:#553c7b;">─</button>
+                            <button onclick="maximizeApp()" title="Maximize / Restore" style="background:#6b46c1;">□</button>
+                            <button onclick="closeApp()" title="Close" style="background:#e53e3e;">✕</button>
+                        </div>
+
+                    </div>
+
+                    <!-- Window Content -->
+                    <div id="windowContent" class="window-content">
+
+                        Welcome to NEXUS AI OS!
+
+                    </div>
+
+                </div>
+
+                <!-- AI Assistant Chat -->
+                <section class="assistant">
+
+                    <h2>🤖 NEXUS AI Assistant</h2>
+
+                    <div id="output">
+
+                        Hello! I am your NEXUS AI Assistant.
+
+                        How can I help you today?
+
+                    </div>
+
+                    <div class="assistant-input-row" style="display:flex; gap:8px; align-items:center; margin-top:8px;">
+                        <input type="text" id="userInput" placeholder="Ask me something or speak..." style="flex:1;">
+                        <select id="desktopVoiceLangSelect" style="background:#26183c; color:#d8b4fe; border:1px solid #634394; border-radius:6px; padding:8px 6px; font-size:11px; cursor:pointer;" title="Speech recognition language">
+                            <option value="en-IN" selected>🇮🇳 English (India)</option>
+                            <option value="ta-IN">🇮🇳 தமிழ் (India)</option>
+                        </select>
+                        <button id="desktopMicBtn" onclick="toggleSpeechRecognition('userInput', 'desktopVoiceLangSelect', 'desktopMicBtn', 'desktopMicStatus')" class="nexus-btn voice-mic-btn" style="min-width:85px; display:flex; align-items:center; justify-content:center; gap:6px;" title="Voice Input (Browser Web Speech API)">
+                            <span id="desktopMicIcon">🎤</span> <span id="desktopMicLabel">Speak</span>
+                        </button>
+                        <button onclick="sendMessage()">
+                            Send
+                        </button>
+                    </div>
+                    <div id="desktopMicStatus" style="font-size:11px; color:#a99ec2; margin-top:4px; display:none;"></div>
+
+                </section>
+
+            </section>
+
+        </main>
+
+        <!-- Bottom Taskbar -->
+        <footer class="taskbar" id="taskbar">
+
+            <div style="display:flex; align-items:center; gap:12px;">
+                <span style="font-weight:bold; color:#d8b4fe;">✦ NEXUS</span>
+                <div id="taskbarRunningApps" style="display:flex; gap:6px;"></div>
+            </div>
+
+            <div style="font-size:12px; color:#b9a6d5; display:flex; gap:12px; align-items:center;">
+                <span id="taskbarAiStatus">AI: Not Configured</span>
+                <span>🟢 All Systems Nominal</span>
+                <span>Desktop Environment</span>
+            </div>
+
+        </footer>
+
+    </div>
+
+    <!-- JavaScript Connection -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>

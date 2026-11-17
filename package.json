@@ -1,0 +1,61 @@
+{
+  "name": "nexus-ai-os",
+  "productName": "NEXUS AI OS",
+  "version": "1.0.0",
+  "description": "NEXUS AI OS - Autonomous AI Operating System Desktop Application",
+  "main": "electron/main.js",
+  "author": "NEXUS Core Team",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build:backend": "powershell -ExecutionPolicy Bypass -File ./scripts/build_backend.ps1",
+    "build:installer": "electron-builder --win",
+    "pack": "electron-builder --dir"
+  },
+  "build": {
+    "appId": "com.nexus.aios",
+    "productName": "NEXUS AI OS",
+    "copyright": "Copyright © 2026 NEXUS AI OS",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "sign": "./scripts/noop_sign.js",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "NEXUS AI OS"
+    },
+    "files": [
+      "electron/**/*",
+      "index.html",
+      "style.css",
+      "script.js",
+      "build/icon.png",
+      "build/icon.ico"
+    ],
+    "extraResources": [
+      {
+        "from": "build/backend/nexus_backend",
+        "to": "backend"
+      }
+    ]
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
+  }
+}

@@ -1,0 +1,31 @@
+# Environment variables and API keys
+.env
+.env.local
+
+# Python virtual environment
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Local Database & User Uploads
+database/*.db
+uploads/*
+!uploads/.gitkeep
+
+# Scratch and test files
+scratch/
+
+
+.env
+.env.*
+!.env.example
+
+.venv/
+venv/
+node_modules/
+__pycache__/
+*.pyc
+
+.electron-cache/
